@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Download the Prometheus JMX agent
+echo "Downloading Prometheus agent..."
+PROMETHEUS_AGENT_VERSION=0.12.0
+curl -o /deployments/prometheus_javaagent.jar https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${PROMETHEUS_AGENT_VERSION}/jmx_prometheus_javaagent-${PROMETHEUS_AGENT_VERSION}.jar
+echo "Done"
+
+# Now run the standard AMQ assemble script
+/usr/libexec/s2i/assemble
+rc=$?
+
+exit $rc
