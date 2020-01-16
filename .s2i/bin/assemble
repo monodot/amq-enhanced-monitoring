@@ -7,7 +7,7 @@ curl -o /deployments/prometheus_javaagent.jar https://repo1.maven.org/maven2/io/
 echo "Done"
 
 # Now run the standard AMQ assemble script
-/usr/libexec/s2i/assemble
+/usr/local/s2i/assemble
 rc=$?
 
 exit $rc
