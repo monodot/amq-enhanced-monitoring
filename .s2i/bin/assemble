@@ -6,7 +6,7 @@ PROMETHEUS_AGENT_VERSION="${PROMETHEUS_AGENT_VERSION:-0.12.0}"
 # Download the Prometheus JMX agent
 echo "Downloading Prometheus agent ${PROMETHEUS_AGENT_VERSION}..."
 # echo "Downloading Prometheus agent 0.12.00000..."
-curl -o /tmp/src/deployments/prometheus_javaagent.jar https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${PROMETHEUS_AGENT_VERSION}/jmx_prometheus_javaagent-${PROMETHEUS_AGENT_VERSION}.jar
+curl -o /tmp/src/prometheus_javaagent.jar https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${PROMETHEUS_AGENT_VERSION}/jmx_prometheus_javaagent-${PROMETHEUS_AGENT_VERSION}.jar
 # curl -vvv -o /tmp/src/prometheus_javaagent.jar https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.12.0/jmx_prometheus_javaagent-0.12.0.jar
 echo "Done"
 
