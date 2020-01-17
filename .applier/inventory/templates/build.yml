@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: amq-broker-prom-build
+  annotations:
+    description: Build template for an AMQ Broker image with the Prometheus agent added
+    iconClass: icon-rh
+    tags: amq
+parameters:
+- name: APP_NAME
+  description: Name of the output image stream
+  value: amq-broker-prom
+- name: PROMETHEUS_AGENT_VERSION
+  description: Prometheus JMX agent version to download
+  value: 0.12.0
+- name: IMAGE_STREAM_NAMESPACE
+  description: Namespace where the AMQ Broker image stream is located
+  value: openshift
+- name: AMQ_IMAGE_STREAM
+  description: Name and tag of the AMQ Broker image stream to build on
+  value: amq-broker:7.4
+objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: ${APP_NAME}
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${APP_NAME}:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: develop
+        uri: https://github.com/monodot/amq-enhanced-monitoring
+      type: Git
+    strategy:
+      sourceStrategy:
+        env:
+        - name: PROMETHEUS_AGENT_VERSION
+          value: ${PROMETHEUS_AGENT_VERSION}
+        from:
+          kind: ImageStreamTag
+          name: ${AMQ_IMAGE_STREAM}
+          namespace: ${IMAGE_STREAM_NAMESPACE}
+      type: Source
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: ${APP_NAME}
